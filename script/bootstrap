@@ -4,7 +4,22 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  local url_ipfs_Darwin="https://dist.ipfs.io/go-ipfs/v${IPFS_VERSION}/go-ipfs_v${IPFS_VERSION}_darwin-amd64.tar.gz"
+  local url_ipfs_Linux="https://dist.ipfs.io/go-ipfs/v${IPFS_VERSION}/go-ipfs_v${IPFS_VERSION}_linux-amd64.tar.gz"
+
+  local url_ipfs="url_ipfs_$(uname -s)"
+  local fnm_ipfs="$(basename "${!url_ipfs}")"
+  cache curl "$fnm_ipfs" "${!url_ipfs}"
+  
+  mkdir -p "$shome/vendor/ipfs-${IPFS_VERSION}"
+  pushd "$shome/vendor/ipfs-${IPFS_VERSION}"
+  tar xfz "${DATA}/cache/curl/$fnm_ipfs"
+  mkdir -p "$shome/bin"
+  chmod 755 go-ipfs/ipfs
+  mv go-ipfs/ipfs "$shome/bin/"
+  popd
+
+  rm -rf "$shome/vendor/ipfs-${IPFS_VERSION}"
 }
 
 main "$@"
