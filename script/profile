@@ -2,11 +2,7 @@
 
 function _ipfs_profile {
   local shome="${_ipfs_home:="$(cd -P -- "$(dirname -- "$BASH_SOURCE")/.." && pwd -P)"}"
-  PATH="$shome/bin:$shome/exec:$PATH"
-  #export ANSIBLE_ROLES_PATH="$shome/roles${ANSIBLE_ROLES_PATH:+:${ANSIBLE_ROLES_PATH}}"
-  #export ANSIBLE_LIBRARY="$shome/library${ANSIBLE_LIBRARY:+:${ANSIBLE_LIBRARY}}"
-
-  IPFS_VERSION='0.4.10'
+  PATH="$shome/bin:$PATH"
 }
 
 _ipfs_profile
